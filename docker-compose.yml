@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # The container for our Bridge API
+  bridge:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+  # Set your API Key here. It can be any secure string.
+      - BRIDGE_API_KEY=MINHA_CHAVE_SECRETA_12345
+      - PORT=3000
+    depends_on:
+      - playwright-server
+
+  # The container that runs the Playwright server
+  # playwright-server:
+  #   image: mcr.microsoft.com/playwright:v1.45.0-jammy
+  #   restart: unless-stopped
+  # # Exposes the port so we can see the WS URL and for n8n to connect
+  #   ports:
+  #     - "9222:9222"
+  # # Command to start the Playwright server, listening on all interfaces
+  #   command: >
+  #     npx playwright launch-server 
+  #     --browser chromium 
+  #     --port 9222 
+  #     --host 0.0.0.0
